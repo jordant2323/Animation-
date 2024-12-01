@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab 2 - Moving Triangles</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #triangleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="triangleCanvas"></canvas>
+    <div class="content">
+        <h1>Tab 2 - Moving Triangles</h1>
+        <div class="text-box">
+            <h2>Light Green Triangles</h2>
+            <p>This tab features light green triangles moving in the background. The triangles are created using HTML5 canvas and animated with JavaScript.</p>
+        </div>
+        <a href="index.html" class="tab">Back to Home</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('triangleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const numTriangles = 10;
+        const triangles = [];
+
+        for (let i = 0; i < numTriangles; i++) {
+            triangles.push({
+                size: Math.random() * 30 + 20,
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                speed: Math.random() * 0.5 + 0.1
+            });
+        }
+
+        function drawTriangle(x, y, size) {
+            ctx.beginPath();
+            ctx.moveTo(x, y - size / 2);
+            ctx.lineTo(x - size / 2, y + size / 2);
+            ctx.lineTo(x + size / 2, y + size / 2);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(144, 238, 144, 0.5)';
+            ctx.fill();
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            triangles.forEach(triangle => {
+                triangle.y += triangle.speed;
+                if (triangle.y > canvas.height + triangle.size) {
+                    triangle.y = -triangle.size;
+                    triangle.x = Math.random() * canvas.width;
+                }
+                drawTriangle(triangle.x, triangle.y, triangle.size);
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>

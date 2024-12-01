@@ -1,0 +1,151 @@
+body {
+    margin: 0;
+    padding: 5px;
+    background-color: #e6f3ff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    border: 5px solid black;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.content {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+    flex-grow: 1;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.text-box {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.tab {
+    width: 80px;
+    height: 80px;
+    background-color: #4a90e2;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.tab:hover {
+    background-color: #2c3e50;
+}
+
+.controller {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%234a90e2" d="M480 256a224 224 0 1 0-448 0 224 224 0 1 0 448 0zM240 112v64H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h64v64a16 16 0 0 0 16 16h32a16 16 0 0 0 16-16v-64h64a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16h-64v-64a16 16 0 0 0-16-16h-32a16 16 0 0 0-16 16z"/></svg>');
+    background-size: contain;
+    animation: float 3s infinite ease-in-out;
+    opacity: 0.5;
+}
+
+.fireball {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><radialGradient id="flame" cx="50%" cy="50%" r="50%" fx="50%" fy="50%"><stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" /><stop offset="50%" style="stop-color:rgb(255,120,0);stop-opacity:1" /><stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" /></radialGradient></defs><circle cx="50" cy="50" r="45" fill="url(%23flame)"/><path d="M50 5 Q55 25 65 15 Q70 35 80 25 Q75 45 85 40 Q70 60 75 70 Q60 75 65 85 Q50 80 35 85 Q40 75 25 70 Q30 60 15 40 Q25 45 20 25 Q30 35 35 15 Q45 25 50 5Z" fill="rgb(255,200,0)" opacity="0.7"><animate attributeName="d" dur="0.5s" repeatCount="indefinite" values="M50 5 Q55 25 65 15 Q70 35 80 25 Q75 45 85 40 Q70 60 75 70 Q60 75 65 85 Q50 80 35 85 Q40 75 25 70 Q30 60 15 40 Q25 45 20 25 Q30 35 35 15 Q45 25 50 5Z; M50 5 Q60 20 70 15 Q75 30 85 25 Q80 40 90 35 Q75 55 80 65 Q65 70 70 80 Q55 75 40 80 Q45 70 30 65 Q35 55 20 35 Q30 40 25 20 Q35 30 40 10 Q50 20 50 5Z; M50 5 Q55 25 65 15 Q70 35 80 25 Q75 45 85 40 Q70 60 75 70 Q60 75 65 85 Q50 80 35 85 Q40 75 25 70 Q30 60 15 40 Q25 45 20 25 Q30 35 35 15 Q45 25 50 5Z"/></path></svg>');
+    background-size: contain;
+    z-index: 1;
+    left: 5px;
+    top: 5px;
+    animation: flicker 0.5s infinite alternate;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(15deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes flicker {
+    0% { opacity: 1; }
+    100% { opacity: 0.8; }
+}
+
+.controller:nth-child(odd) {
+    animation: spin 6s infinite linear;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    z-index: 2;
+}
+
+@media (max-width: 600px) {
+    .content {
+        margin: 10px;
+        padding: 10px;
+        font-size: 0.9em;
+    }
+    .text-box {
+        width: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+        font-size: 0.9em;
+    }
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+    .tab {
+        width: 90%;
+        height: 60px;
+        margin: 5px 0;
+        font-size: 1em;
+    }
+    h1, h2 {
+        font-size: 1.5em;
+    }
+    p {
+        font-size: 1em;
+    }
+}

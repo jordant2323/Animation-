@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab 3 - Moving X's</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #xCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="xCanvas"></canvas>
+    <div class="content">
+        <h1>Tab 1 Content</h1>
+        <div class="text-box">
+            <p>This is the content for Tab 1. You can add any information or features specific to this tab here.</p>
+        </div>
+        <a href="index.html" class="tab">Back to Home</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('xCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const xShapes = [];
+        const numXShapes = 15;
+
+        for (let i = 0; i < numXShapes; i++) {
+            xShapes.push({
+                size: Math.random() * 30 + 20,
+                x: canvas.width + 50,
+                y: Math.random() * canvas.height,
+                speed: Math.random() * 1 + 0.5
+            });
+        }
+
+        function drawX(x, y, size) {
+            ctx.strokeStyle = 'rgba(100, 100, 255, 0.3)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(x - size/2, y - size/2);
+            ctx.lineTo(x + size/2, y + size/2);
+            ctx.moveTo(x + size/2, y - size/2);
+            ctx.lineTo(x - size/2, y + size/2);
+            ctx.stroke();
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            xShapes.forEach(x => {
+                x.x -= x.speed;
+                if (x.x < -x.size) {
+                    x.x = canvas.width + x.size;
+                    x.y = Math.random() * canvas.height;
+                }
+                drawX(x.x, x.y, x.size);
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab 3 - Moving Squares</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #squareCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="squareCanvas"></canvas>
+    <div class="content">
+        <h1>Tab 3- Moving Squares</h1>
+        <div class="text-box">
+            <h2>Light Red Squares</h2>
+            <p>This tab features light red squares moving from left to right in the background. The squares are created using HTML5 canvas and animated with JavaScript.</p>
+        </div>
+        <a href="index.html" class="tab">Back to Home</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('squareCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const squares = [];
+        const numSquares = 15;
+
+        for (let i = 0; i < numSquares; i++) {
+            squares.push({
+                size: Math.random() * 30 + 20,
+                x: -50,
+                y: Math.random() * canvas.height,
+                speed: Math.random() * 1 + 0.5
+            });
+        }
+
+        function drawSquare(x, y, size) {
+            ctx.fillStyle = 'rgba(255, 100, 100, 0.3)';
+            ctx.fillRect(x, y, size, size);
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            squares.forEach(square => {
+                square.x += square.speed;
+                if (square.x > canvas.width) {
+                    square.x = -square.size;
+                    square.y = Math.random() * canvas.height;
+                }
+                drawSquare(square.x, square.y, square.size);
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
