@@ -30,6 +30,40 @@ function animateFireball() {
     requestAnimationFrame(animateFireball);
 }
 
+
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+function initMobileTabs() {
+  if (window.innerWidth <= 768) {
+    var tabs = document.getElementsByClassName("tablinks");
+    for (var i = 0; i < tabs.length; i++) {
+      tabs[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
+    }
+  }
+}
+
+window.onload = initMobileTabs;
+window.onresize = initMobileTabs;
 // Initialize animations when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     createControllers();
